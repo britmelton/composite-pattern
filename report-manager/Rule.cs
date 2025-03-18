@@ -2,7 +2,7 @@
 
 public class RuleSet
 {
-    private Dictionary<string, RootRule> _rules = new();
+    private readonly Dictionary<string, RootRule> _rules = new();
 
     public void Add(string questionId, Rule rule)
     {
@@ -27,14 +27,13 @@ public class RuleSet
 }
 
 /// <summary>
-/// component
+///     component
 /// </summary>
 public abstract class Rule
 {
-    protected Rule() { }
-
     public QuestionResponse Response { get; protected set; }
     public abstract bool Apply(QuestionResponse response, Survey survey);
+
     public virtual bool Apply(QuestionResponse response, Survey survey, out QuestionResponse adjustedValue)
     {
         adjustedValue = Response;
@@ -43,11 +42,11 @@ public abstract class Rule
 }
 
 /// <summary>
-/// composite
+///     composite
 /// </summary>
 public class RootRule : Rule
 {
-    private List<Rule> _rules = new();
+    private readonly List<Rule> _rules = new();
 
     public RootRule(Rule rule)
     {
@@ -70,28 +69,26 @@ public class RootRule : Rule
             return true;
         }
 
-        foreach (var r in _rules.Except([noChangeRule]))
-        {
+        foreach (var r in _rules.Except(new List<Rule> { noChangeRule }))
             if (r.Apply(questionResponse, survey))
             {
                 Response = r.Response;
                 break;
             }
-        }
 
         return true;
     }
 }
 
 /// <summary>
-/// leaf
+///     leaf
 /// </summary>
 [Obsolete("replace with MatchRule")]
 public class NoChangeRule : Rule
 {
     private readonly string[] _selections;
 
-    public NoChangeRule(string[] selections) : base()
+    public NoChangeRule(string[] selections)
     {
         _selections = selections;
     }
@@ -109,12 +106,12 @@ public class NoChangeRule : Rule
 }
 
 /// <summary>
-/// composite
+///     composite
 /// </summary>
 public class AllRule : Rule
 {
-    private readonly List<Rule> _rules = new();
     private readonly string _overrideValue;
+    private readonly List<Rule> _rules = new();
 
     public AllRule(string overrideValue)
     {
@@ -134,12 +131,13 @@ public class AllRule : Rule
             Response = new QuestionResponse(response.QuestionId, _overrideValue);
             return true;
         }
+
         return false;
     }
 }
 
 /// <summary>
-/// leaf
+///     leaf
 /// </summary>
 public class MatchRule : Rule
 {
@@ -152,10 +150,6 @@ public class MatchRule : Rule
         _values = values;
     }
 
-    public override bool Apply(QuestionResponse response, Survey survey)
-    {
-        var question = survey.Responses.SingleOrDefault(x => x.QuestionId == _questionId);
-
-        return _values.Contains(question.Response);
-    }
+    public override bool Apply(QuestionResponse response, Survey survey) =>
+        _values.Contains(survey[_questionId].Response);
 }
