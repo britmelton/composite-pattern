@@ -1,0 +1,133 @@
+[
+  {
+    "QuestionId": "MA_1",
+    "Selections": [ "1", "2", "98", "99" ],
+    "Rules": [
+      {
+        "TargetValue": "99",
+        "MatchType": "MatchAll",
+        "Conditions": [
+          {
+            "QuestionId": "MA_1",
+            "Values": [ "null" ]
+          },
+          {
+            "QuestionId": "DISTRIB",
+            "Values": [ "2" ]
+          }
+        ]
+      },
+      {
+        "TargetValue": "M",
+        "Conditions": [
+          {
+            "QuestionId": "MA_1",
+            "Values": [ "null" ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "QuestionId": "MA_2NAME",
+    "Selections": [ "Text", "98", "99" ],
+    "Rules": [
+      {
+        "TargetValue": "88",
+        "MatchType": "MatchAll",
+        "Conditions": [
+          {
+            "QuestionId": "MA_1",
+            "Values": [ "null", "1" ]
+          },
+          {
+            "QuestionId": "DISTRIB",
+            "Values": [ "2" ]
+          }
+        ]
+      },
+      {
+        "TargetValue": "M",
+        "MatchType": "MatchAll",
+        "Conditions": [
+          {
+            "QuestionId": "MA_1",
+            "Values": [ "2" ]
+          },
+          {
+            "QuestionId": "DISTRIB",
+            "Values": [ "2" ]
+          }
+        ]
+      },
+      {
+        "TargetValue": "88",
+        "Conditions": [
+          {
+            "QuestionId": "MA_1",
+            "Values": [ "1" ]
+          }
+        ]
+      },
+      {
+        "TargetValue": "M",
+        "Conditions": [
+          {
+            "QuestionId": "MA_1",
+            "Values": [ "null", "2", "98", "99" ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "QuestionId": "MA_4",
+    "Selections": [ "1", "2", "3", "4", "98", "99" ],
+    "Rules": [
+      {
+        "TargetValue": "88",
+        "MatchType": "MatchAll",
+        "Conditions": [
+          {
+            "QuestionId": "MA_3",
+            "Values": [ "null", "2" ]
+          },
+          {
+            "QuestionId": "DISTRIB",
+            "Values": [ "2" ]
+          }
+        ]
+      },
+      {
+        "TargetValue": "88",
+        "Conditions": [
+          {
+            "QuestionId": "MA_3",
+            "Values": [ "2", "98", "99" ]
+          }
+        ]
+
+      }
+    ]
+  },
+  {
+    "QuestionId": "MA_7",
+    "Selections": [ "1", "2", "3", "4", "5", "6", "7", "98", "99" ],
+    "Rules": [
+      {
+        "OverrideValue": "M",
+        "Conditions": [
+          {
+            "QuestionId": "MA_7",
+            "Values": [ "null" ]
+          }
+        ]
+      }
+    ],
+    "DecrementRule": {
+      "Values": [ "1", "2", "3", "4", "5", "6", "7" ],
+      "Type": "Subtract",
+      "Amount": 1
+    }
+  }
+]
