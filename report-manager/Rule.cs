@@ -35,7 +35,11 @@ public abstract class Rule
 
     public QuestionResponse Response { get; protected set; }
     public abstract bool Apply(QuestionResponse response, Survey survey);
-
+    public virtual bool Apply(QuestionResponse response, Survey survey, out QuestionResponse adjustedValue)
+    {
+        adjustedValue = Response;
+        return true;
+    }
 }
 
 /// <summary>
@@ -44,8 +48,6 @@ public abstract class Rule
 public class RootRule : Rule
 {
     private List<Rule> _rules = new();
-
-    public QuestionResponse Response { get; private set; }
 
     public RootRule(Rule rule)
     {
@@ -60,7 +62,7 @@ public class RootRule : Rule
 
     public override bool Apply(QuestionResponse questionResponse, Survey survey)
     {
-        var noChangeRule = _rules.OfType<NoChangeRule>().Single();
+        var noChangeRule = _rules.First();
 
         if (noChangeRule.Apply(questionResponse, survey))
         {
@@ -84,6 +86,7 @@ public class RootRule : Rule
 /// <summary>
 /// leaf
 /// </summary>
+[Obsolete("replace with MatchRule")]
 public class NoChangeRule : Rule
 {
     private readonly string[] _selections;

@@ -20,8 +20,7 @@ public class RuleSetBuilder
 
         foreach (var q in _questionConfigs)
         {
-            var noChangeRule = new NoChangeRule(q.Selections);
-            _ruleSet.Add(q.QuestionId, noChangeRule);
+            _ruleSet.Add(q.QuestionId, new MatchRule(q.QuestionId, q.Selections));
 
             foreach (var r in q.Rules)
             {

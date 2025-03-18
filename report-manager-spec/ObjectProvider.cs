@@ -16,7 +16,7 @@ public class ObjectProvider
 
         var calculatedValues = new QuestionCalculatedValues();
         calculatedValues.TargetValue = "99";
-        calculatedValues.MatchingConditions = [responseIsNull, distribWeb];
+        calculatedValues.Conditions = [responseIsNull, distribWeb];
         calculatedValues.MatchType = Report_Manager.MatchType.MatchAll;
 
         var questionConfig = new QuestionConfig()
