@@ -1,8 +1,9 @@
 ﻿namespace Report_Manager;
 
-/// <summary>
-///     leaf
-/// </summary>
+/// <remarks>
+///     The original leaf <see cref="Rule" /> for determining if a <see cref="QuestionResponse" /> matched any
+///     approved values.
+/// </remarks>
 [Obsolete("replace with MatchRule")]
 public class NoChangeRule : Rule
 {
@@ -16,12 +17,6 @@ public class NoChangeRule : Rule
     public override bool Apply(QuestionResponse response, Survey survey, out QuestionResponse? adjustedResponse)
     {
         adjustedResponse = null;
-
-        if (!_selections.Contains(response.Response))
-            return false;
-
-        adjustedResponse = new QuestionResponse(response.QuestionId, response.Response);
-
-        return true;
+        return _selections.Contains(response.Response);
     }
 }

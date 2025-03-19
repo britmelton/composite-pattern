@@ -4,7 +4,7 @@ public partial class RuleSet
 {
     public class Builder
     {
-        private readonly List<QuestionConfig> _questionConfigs = new();
+        private readonly List<QuestionConfig> _questionConfigs = [];
         private RuleSet? _ruleSet;
 
         public Builder Build()
