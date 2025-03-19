@@ -1,28 +1,21 @@
 ﻿namespace Report_Manager;
 
-public class ReportBuilder
+public partial class Report
 {
-    public Report Build(Survey survey, RuleSet ruleSet)
+    /// <remarks>Structured this way to prevent incorrect creating/altering of <see cref="Report" />s.</remarks>
+    public class Builder
     {
-        var report = new Report();
-
-        foreach(var response in survey.Responses)
+        public Report Build(Survey survey, RuleSet ruleSet)
         {
-            var adjustedResponse = ruleSet.Apply(response, survey);
-            report.Add(response.QuestionId, adjustedResponse);
+            var report = new Report();
+
+            foreach (var response in survey)
+            {
+                var reportResponse = ruleSet.Apply(response, survey);
+                report.Add(response.QuestionId, reportResponse);
+            }
+
+            return report;
         }
-        return report;
-    }
-}
-
-public class Report
-{
-    private Dictionary<string, QuestionResponse> _questionResponses = new();
-
-    public string this[string questionId] => _questionResponses[questionId].Response;
-
-    public void Add(string questionId, QuestionResponse adjustedResponse)
-    {
-        _questionResponses.Add(questionId, adjustedResponse);
     }
 }
