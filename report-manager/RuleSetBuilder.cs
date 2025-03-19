@@ -1,56 +1,41 @@
-﻿using Newtonsoft.Json;
+﻿namespace Report_Manager;
 
-namespace Report_Manager;
-
-public class RuleSetBuilder
+public partial class RuleSet
 {
-    private List<QuestionConfig> _questionConfigs = new();
-    private RuleSet? _ruleSet;
-
-    public RuleSetBuilder Load(List<QuestionConfig> questionConfigs)
+    public class Builder
     {
-        _questionConfigs.Clear();
-        _questionConfigs.AddRange(questionConfigs);
-        return this;
-    }
+        private readonly List<QuestionConfig> _questionConfigs = new();
+        private RuleSet? _ruleSet;
 
-    public RuleSetBuilder Build()
-    {
-        _ruleSet = new RuleSet();
-
-        foreach (var q in _questionConfigs)
+        public Builder Build()
         {
-            _ruleSet.Add(q.QuestionId, new MatchRule(q.QuestionId, q.Selections));
+            _ruleSet = new RuleSet();
 
-            foreach (var r in q.Rules)
+            foreach (var q in _questionConfigs)
             {
-                var allRule = new AllRule(r.TargetValue);
+                _ruleSet.Add(q.QuestionId, new MatchRule(q.QuestionId, q.Selections));
 
-                foreach (var mc in r.Conditions)
-                    allRule.Add(new MatchRule(mc.QuestionId, mc.Values));
+                foreach (var r in q.Rules)
+                {
+                    var allRule = new AllRule(
+                        r.TargetValue,
+                        r.Conditions.Select(x => new MatchRule(x.QuestionId, x.Values))
+                    );
 
-                _ruleSet.Add(q.QuestionId, allRule);
+                    _ruleSet.Add(q.QuestionId, allRule);
+                }
             }
+
+            return this;
         }
 
-        return this;
-    }
+        public RuleSet GetRuleSet() => _ruleSet!;
 
-    public RuleSet GetRuleSet()
-    {
-        return _ruleSet!;
-    }
-}
-
-public interface IQuestionConfigRepository
-{
-    List<QuestionConfig> Get(string filePath);
-}
-
-public class QuestionConfigRepository : IQuestionConfigRepository
-{
-    public List<QuestionConfig> Get(string filePath)
-    {
-        return JsonConvert.DeserializeObject<List<QuestionConfig>>(File.ReadAllText(filePath));
+        public Builder Load(List<QuestionConfig> questionConfigs)
+        {
+            _questionConfigs.Clear();
+            _questionConfigs.AddRange(questionConfigs);
+            return this;
+        }
     }
 }

@@ -1,52 +1,35 @@
 ﻿namespace Report_Manager;
 
-public class RuleSet
-{
-    private readonly Dictionary<string, RootRule> _rules = new();
-
-    public void Add(string questionId, Rule rule)
-    {
-        if (!_rules.ContainsKey(questionId))
-        {
-            var rootRule = new RootRule(rule);
-            _rules.Add(questionId, rootRule);
-            return;
-        }
-
-        _rules[questionId].Add(rule);
-    }
-
-    public QuestionResponse Apply(QuestionResponse response, Survey survey)
-    {
-        if (!_rules.ContainsKey(response.QuestionId))
-            return response;
-
-        _rules[response.QuestionId].Apply(response, survey);
-        return _rules[response.QuestionId].Response;
-    }
-}
-
 /// <summary>
-///     component
+///     Represents a set of logic applied to <see cref="Survey" /> responses when building a <see cref="Report" />.
 /// </summary>
+/// <remarks>The component class in the composite design pattern.</remarks>
 public abstract class Rule
 {
-    public QuestionResponse Response { get; protected set; }
-    public abstract bool Apply(QuestionResponse response, Survey survey);
-
-    public virtual bool Apply(QuestionResponse response, Survey survey, out QuestionResponse adjustedValue)
-    {
-        adjustedValue = Response;
-        return true;
-    }
+    /// <summary>
+    ///     Applies the <see cref="Rule" /> to the supplied <see cref="QuestionResponse" />.
+    /// </summary>
+    /// <param name="response">The <see cref="Survey" /> response that is being mapped to a <see cref="Report" /> response.</param>
+    /// <param name="survey">The survey the response came from. Used to look up other response values if necessary.</param>
+    /// <param name="adjustedResponse">The adjusted response value if an adjustment was warranted.</param>
+    /// <returns>
+    ///     <c>true</c> if a rule was satisfied, <c>false</c> otherwise. <c>true</c> does not guarantee an adjusted
+    ///     response.
+    /// </returns>
+    public abstract bool Apply(
+        QuestionResponse response,
+        Survey survey,
+        out QuestionResponse? adjustedResponse
+    );
 }
 
 /// <summary>
-///     composite
+///     Always the base <see cref="Rule" /> for a given question.
+///     Responsible for applying its child rules to a <see cref="QuestionResponse" />.
 /// </summary>
 public class RootRule : Rule
 {
-    private readonly List<Rule> _rules = new();
+    private readonly List<Rule> _rules = [];
 
     public RootRule(Rule rule)
     {
@@ -59,85 +42,48 @@ public class RootRule : Rule
         return this;
     }
 
-    public override bool Apply(QuestionResponse questionResponse, Survey survey)
+    public override bool Apply(QuestionResponse questionResponse, Survey survey, out QuestionResponse? adjustedResponse)
     {
-        var noChangeRule = _rules.First();
+        adjustedResponse = null;
 
-        if (noChangeRule.Apply(questionResponse, survey))
-        {
-            Response = noChangeRule.Response;
-            return true;
-        }
-
-        foreach (var r in _rules.Except(new List<Rule> { noChangeRule }))
-            if (r.Apply(questionResponse, survey))
-            {
-                Response = r.Response;
-                break;
-            }
+        foreach (var rule in _rules)
+            if (rule.Apply(questionResponse, survey, out adjustedResponse))
+                break; // currently, the method exits once any top-level rule has been successfully applied
 
         return true;
     }
 }
 
 /// <summary>
-///     leaf
-/// </summary>
-[Obsolete("replace with MatchRule")]
-public class NoChangeRule : Rule
-{
-    private readonly string[] _selections;
-
-    public NoChangeRule(string[] selections)
-    {
-        _selections = selections;
-    }
-
-    public override bool Apply(QuestionResponse response, Survey survey)
-    {
-        if (_selections.Contains(response.Response))
-        {
-            Response = new QuestionResponse(response.QuestionId, response.Response);
-            return true;
-        }
-
-        return false;
-    }
-}
-
-/// <summary>
-///     composite
+///     A composite <see cref="Rule" /> that overrides a <see cref="QuestionResponse" /> if all its children are
+///     satisfied.
 /// </summary>
 public class AllRule : Rule
 {
     private readonly string _overrideValue;
-    private readonly List<Rule> _rules = new();
+    private readonly List<Rule> _rules = [];
 
-    public AllRule(string overrideValue)
+    public AllRule(string overrideValue, IEnumerable<Rule> rules)
     {
         _overrideValue = overrideValue;
+        _rules.AddRange(rules);
     }
 
-    public AllRule Add(Rule rule)
+    public override bool Apply(QuestionResponse response, Survey survey, out QuestionResponse? adjustedResponse)
     {
-        _rules.Add(rule);
-        return this;
-    }
+        var isSatisfied = _rules.All(x => x.Apply(response, survey, out var adjustedResponse));
 
-    public override bool Apply(QuestionResponse response, Survey survey)
-    {
-        if (_rules.All(x => x.Apply(response, survey)))
-        {
-            Response = new QuestionResponse(response.QuestionId, _overrideValue);
-            return true;
-        }
+        adjustedResponse = isSatisfied
+            ? new QuestionResponse(response.QuestionId, _overrideValue)
+            : null;
 
-        return false;
+        return isSatisfied;
     }
 }
 
 /// <summary>
-///     leaf
+///     A leaf <see cref="Rule" /> used to determine if a <see cref="QuestionResponse" /> matches a set of acceptable
+///     values.
 /// </summary>
 public class MatchRule : Rule
 {
@@ -150,6 +96,9 @@ public class MatchRule : Rule
         _values = values;
     }
 
-    public override bool Apply(QuestionResponse response, Survey survey) =>
-        _values.Contains(survey[_questionId].Response);
+    public override bool Apply(QuestionResponse response, Survey survey, out QuestionResponse? adjustedResponse)
+    {
+        adjustedResponse = null;
+        return _values.Contains(survey[_questionId].Response);
+    }
 }
