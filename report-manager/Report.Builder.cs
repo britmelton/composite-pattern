@@ -9,10 +9,10 @@ public partial class Report
         {
             var report = new Report();
 
-            foreach (var response in survey)
+            foreach (var questionResponse in survey)
             {
-                var reportResponse = ruleSet.Apply(response, survey);
-                report.Add(response.QuestionId, reportResponse);
+                var response = ruleSet.Apply(questionResponse, survey);
+                report.Add(questionResponse.QuestionId, response);
             }
 
             return report;
