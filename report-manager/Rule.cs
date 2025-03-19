@@ -19,7 +19,7 @@ public abstract class Rule
     public abstract bool Apply(
         QuestionResponse response,
         Survey survey,
-        out QuestionResponse? adjustedResponse
+        out string? adjustedResponse
     );
 }
 
@@ -42,7 +42,7 @@ public class RootRule : Rule
         return this;
     }
 
-    public override bool Apply(QuestionResponse questionResponse, Survey survey, out QuestionResponse? adjustedResponse)
+    public override bool Apply(QuestionResponse questionResponse, Survey survey, out string? adjustedResponse)
     {
         adjustedResponse = null;
 
@@ -69,12 +69,12 @@ public class AllRule : Rule
         _rules.AddRange(rules);
     }
 
-    public override bool Apply(QuestionResponse response, Survey survey, out QuestionResponse? adjustedResponse)
+    public override bool Apply(QuestionResponse response, Survey survey, out string? adjustedResponse)
     {
         var isSatisfied = _rules.All(x => x.Apply(response, survey, out var adjustedResponse));
 
         adjustedResponse = isSatisfied
-            ? new QuestionResponse(response.QuestionId, _overrideValue)
+            ? _overrideValue
             : null;
 
         return isSatisfied;
@@ -96,7 +96,7 @@ public class MatchRule : Rule
         _values = values;
     }
 
-    public override bool Apply(QuestionResponse response, Survey survey, out QuestionResponse? adjustedResponse)
+    public override bool Apply(QuestionResponse response, Survey survey, out string? adjustedResponse)
     {
         adjustedResponse = null;
         return _values.Contains(survey[_questionId].Response);

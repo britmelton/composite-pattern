@@ -25,6 +25,12 @@ public class QuestionResponse
         Response = response;
     }
 
+    public void Deconstruct(out string questionId, out string response)
+    {
+        questionId = QuestionId;
+        response = Response;
+    }
+
     public string QuestionId { get; set; }
     public string Response { get; set; }
 }

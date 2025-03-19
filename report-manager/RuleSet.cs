@@ -4,12 +4,14 @@ public partial class RuleSet
 {
     private readonly Dictionary<string, RootRule> _rules = new();
 
-    public QuestionResponse Apply(QuestionResponse response, Survey survey)
+    public string Apply(QuestionResponse questionResponse, Survey survey)
     {
-        if (!_rules.TryGetValue(response.QuestionId, out var rule))
+        var (questionId, response) = questionResponse;
+
+        if (!_rules.TryGetValue(questionId, out var rule))
             return response;
 
-        rule.Apply(response, survey, out var adjustedResponse);
+        rule.Apply(questionResponse, survey, out var adjustedResponse);
 
         return adjustedResponse ?? response;
     }

@@ -14,7 +14,7 @@ public class NoChangeRule : Rule
         _selections = selections;
     }
 
-    public override bool Apply(QuestionResponse response, Survey survey, out QuestionResponse? adjustedResponse)
+    public override bool Apply(QuestionResponse response, Survey survey, out string? adjustedResponse)
     {
         adjustedResponse = null;
         return _selections.Contains(response.Response);

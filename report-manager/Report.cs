@@ -2,17 +2,17 @@
 
 public partial class Report
 {
-    private readonly Dictionary<string, QuestionResponse> _questionResponses = new();
+    private readonly Dictionary<string, string> _responses = new();
 
     private Report()
     {
     }
 
-    public string this[string questionId] => _questionResponses[questionId].Response;
+    public string this[string questionId] => _responses[questionId];
 
-    private Report Add(string questionId, QuestionResponse adjustedResponse)
+    private Report Add(string questionId, string response)
     {
-        _questionResponses.Add(questionId, adjustedResponse);
+        _responses.Add(questionId, response);
         return this;
     }
 }
