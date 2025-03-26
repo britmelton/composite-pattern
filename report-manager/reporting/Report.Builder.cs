@@ -5,7 +5,7 @@ public partial class Report
     /// <remarks>Structured this way to prevent incorrect creating/altering of <see cref="Report" />s.</remarks>
     public class Builder
     {
-        public Report Build(Survey survey, RuleSet ruleSet)
+        public static Report Build(Survey survey, RuleSet ruleSet)
         {
             var report = new Report();
 

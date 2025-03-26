@@ -17,7 +17,7 @@ public class ReportBuilderSpec
             .Build()
             .GetRuleSet();
 
-        var report = new Report.Builder().Build(survey, ruleSet);
+        var report = Report.Builder.Build(survey, ruleSet);
 
         report["Q1"].Should().Be("99");
     }
@@ -42,7 +42,7 @@ public class ReportBuilderSpec
             .Build()
             .GetRuleSet();
 
-        var report = new Report.Builder().Build(survey, ruleSet);
+        var report = Report.Builder.Build(survey, ruleSet);
 
         report["Q1"].Should().Be("1");
     }
