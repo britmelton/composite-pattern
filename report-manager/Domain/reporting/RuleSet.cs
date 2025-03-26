@@ -1,4 +1,4 @@
-﻿namespace ReportManager;
+﻿namespace ReportManager.Domain;
 
 public class RuleSet
 {

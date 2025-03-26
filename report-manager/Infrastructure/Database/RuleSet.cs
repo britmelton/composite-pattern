@@ -1,4 +1,4 @@
-﻿namespace ReportManager.Database;
+﻿namespace ReportManager.Infrastructure.Database;
 
 public class RuleSet
 {

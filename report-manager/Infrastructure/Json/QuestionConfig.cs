@@ -1,8 +1,9 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace ReportManager.Json;
+namespace ReportManager.Infrastructure.Json;
 
+/// <remarks>A storage implementation detail.</remarks>
 public class QuestionConfig
 {
     public string QuestionId { get; set; }

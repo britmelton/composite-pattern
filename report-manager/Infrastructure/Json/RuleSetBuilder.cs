@@ -1,4 +1,6 @@
-﻿namespace ReportManager.Json;
+﻿using ReportManager.Domain;
+
+namespace ReportManager.Infrastructure.Json;
 
 public class RuleSetBuilder
 {

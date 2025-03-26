@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-namespace ReportManager;
+namespace ReportManager.Domain;
 
 public class Survey(params QuestionResponse[] values) : IEnumerable<QuestionResponse>
 {
