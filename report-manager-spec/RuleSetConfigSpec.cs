@@ -1,4 +1,6 @@
-﻿namespace ReportManagerSpec;
+﻿using ReportManager.Json;
+
+namespace ReportManagerSpec;
 
 public class RuleSetConfigSpec
 {

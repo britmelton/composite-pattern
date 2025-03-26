@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace ReportManager;
+namespace ReportManager.Json;
 
 public class QuestionConfig
 {

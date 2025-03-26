@@ -15,14 +15,4 @@ public partial class RuleSet
 
         return adjustedResponse ?? response;
     }
-
-    private RuleSet Add(string questionId, Rule rule)
-    {
-        if (_rules.TryGetValue(questionId, out var rootRule))
-            rootRule.Add(rule);
-        else
-            _rules.Add(questionId, new RootRule(rule));
-
-        return this;
-    }
 }

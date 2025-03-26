@@ -2,6 +2,16 @@
 
 public partial class Report
 {
+    private Report()
+    {
+    }
+
+    private Report Add(string questionId, string response)
+    {
+        _responses.Add(questionId, response);
+        return this;
+    }
+
     /// <remarks>Structured this way to prevent incorrect creating/altering of <see cref="Report" />s.</remarks>
     public class Builder
     {

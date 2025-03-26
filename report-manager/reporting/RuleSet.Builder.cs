@@ -1,7 +1,19 @@
-﻿namespace ReportManager;
+﻿using ReportManager.Json;
+
+namespace ReportManager;
 
 public partial class RuleSet
 {
+    private RuleSet Add(string questionId, Rule rule)
+    {
+        if (_rules.TryGetValue(questionId, out var rootRule))
+            rootRule.Add(rule);
+        else
+            _rules.Add(questionId, new RootRule(rule));
+
+        return this;
+    }
+
     public class Builder
     {
         private readonly List<QuestionConfig> _questionConfigs = [];

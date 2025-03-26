@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace ReportManager;
+namespace ReportManager.Json;
 
 public interface IQuestionConfigRepository
 {

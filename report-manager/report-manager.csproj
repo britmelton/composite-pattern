@@ -17,4 +17,8 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="configuration\Database\" />
+  </ItemGroup>
+
 </Project>

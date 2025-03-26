@@ -1,4 +1,5 @@
-﻿using MatchType = ReportManager.MatchType;
+﻿using ReportManager.Json;
+using MatchType = ReportManager.Json.MatchType;
 
 namespace ReportManagerSpec;
 
