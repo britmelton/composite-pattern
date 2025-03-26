@@ -1,2 +1,2 @@
 global using FluentAssertions;
-global using ReportManager;
+global using ReportManager.Domain;

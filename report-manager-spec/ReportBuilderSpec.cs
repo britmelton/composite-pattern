@@ -1,5 +1,4 @@
-﻿using ReportManager.Domain;
-using ReportManager.Infrastructure.Json;
+﻿using ReportManager.Infrastructure.Json;
 
 namespace ReportManagerSpec;
 
