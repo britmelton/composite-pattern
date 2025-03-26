@@ -1,4 +1,4 @@
-﻿namespace Report_Manager;
+﻿namespace ReportManager;
 
 public static class FilePath
 {

@@ -1,4 +1,4 @@
-﻿namespace Report_Manager_Spec;
+﻿namespace ReportManagerSpec;
 
 public class RuleSetConfigSpec
 {

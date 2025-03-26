@@ -1,6 +1,6 @@
-﻿using MatchType = Report_Manager.MatchType;
+﻿using MatchType = ReportManager.MatchType;
 
-namespace Report_Manager_Spec;
+namespace ReportManagerSpec;
 
 public class ObjectProvider
 {

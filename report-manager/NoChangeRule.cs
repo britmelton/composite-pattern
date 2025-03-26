@@ -1,4 +1,4 @@
-﻿namespace Report_Manager;
+﻿namespace ReportManager;
 
 /// <remarks>
 ///     The original leaf <see cref="Rule" /> for determining if a <see cref="QuestionResponse" /> matched any
