@@ -2,11 +2,11 @@
 
 namespace ReportManagerSpec;
 
-public class FilePath : IConfigFileProvider
+public class TestFilePathProvider : IConfigFilePathProvider
 {
     public string GetPath(string? fileName = null) =>
         Path.Combine(
-            AppDomain.CurrentDomain.BaseDirectory,
+            $"{AppDomain.CurrentDomain.BaseDirectory}/local",
             fileName ?? "RuleSetConfig.json"
         );
 }

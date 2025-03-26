@@ -16,9 +16,9 @@ public class RuleSetConfigSpec
     [Fact]
     public void WhenLoadingRuleSet_ThenConfigFileIsParsed()
     {
-        var provider = new FilePath();
-
-        var configs = _repository.Find(provider.GetPath());
+        var provider = new TestFilePathProvider();
+        var filePath = provider.GetPath();
+        var configs = _repository.Find(filePath);
 
         using var scope = new AssertionScope();
 

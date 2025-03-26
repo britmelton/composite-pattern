@@ -1,6 +1,6 @@
 ﻿namespace ReportManager.Infrastructure.Json;
 
-public interface IConfigFileProvider
+public interface IConfigFilePathProvider
 {
     string GetPath(string? fileName = null);
 }
