@@ -1,8 +1,18 @@
 ﻿namespace ReportManager;
 
-public partial class RuleSet
+public class RuleSet
 {
     private readonly Dictionary<string, RootRule> _rules = new();
+
+    public RuleSet Add(string questionId, Rule rule)
+    {
+        if (_rules.TryGetValue(questionId, out var rootRule))
+            rootRule.Add(rule);
+        else
+            _rules.Add(questionId, new RootRule(rule));
+
+        return this;
+    }
 
     public string Apply(QuestionResponse questionResponse, Survey survey)
     {

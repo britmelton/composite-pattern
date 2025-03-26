@@ -14,7 +14,7 @@ public class ReportBuilderSpec
             new QuestionResponse("Q1", "null")
         );
 
-        var ruleSet = new RuleSet.Builder()
+        var ruleSet = new RuleSetBuilder()
             .Load(ObjectProvider.GetMatchRules())
             .Build()
             .GetRuleSet();
@@ -39,7 +39,7 @@ public class ReportBuilderSpec
             }
         };
 
-        var ruleSet = new RuleSet.Builder()
+        var ruleSet = new RuleSetBuilder()
             .Load(questionConfigs)
             .Build()
             .GetRuleSet();
