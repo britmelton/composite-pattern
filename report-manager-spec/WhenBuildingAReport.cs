@@ -4,7 +4,7 @@ public class WhenBuildingAReport
 {
     #region Setup
 
-    private readonly RuleSet _ruleSet = ObjectProvider.GetBasicRuleSet();
+    private readonly RuleSet _ruleSet = ObjectProvider.GetAlternateRuleSet();
 
     #endregion
 
