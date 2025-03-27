@@ -27,26 +27,15 @@ public class ReportBuilderSpec
     [Fact]
     public void WhenTranslatingANoChange_WithSelectionsMatch_ThenReportResponseIsSetToSurveyResponse()
     {
-        var survey = new Survey(new QuestionResponse("Q1", "1"));
+        const string questionId = "Q1";
+        const string response = "1";
 
-        var questionConfigs = new List<QuestionConfig>
-        {
-            new()
-            {
-                QuestionId = "Q1",
-                Selections = ["1", "2", "98", "99"],
-                Rules = []
-            }
-        };
-
-        var ruleSet = new RuleSetBuilder()
-            .Load(questionConfigs)
-            .Build()
-            .GetRuleSet();
+        var survey = new Survey(new QuestionResponse(questionId, response));
+        var ruleSet = ObjectProvider.GetBasicRuleSet();
 
         var report = Report.Builder.Build(survey, ruleSet);
 
-        report["Q1"].Should().Be("1");
+        report[questionId].Should().Be(response);
     }
 
     #endregion

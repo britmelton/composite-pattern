@@ -5,6 +5,17 @@ namespace ReportManagerSpec;
 
 public class ObjectProvider
 {
+    public static RuleSet GetBasicRuleSet()
+    {
+        var path = new TestFilePathProvider().GetPath("selections-match.json");
+        var questionConfigs = new QuestionConfigRepository().Find(path);
+
+        return new RuleSetBuilder()
+            .Load(questionConfigs)
+            .Build()
+            .GetRuleSet();
+    }
+
     public static List<QuestionConfig> GetMatchRules()
     {
         var distribWeb = new QuestionWithValuesToMatch();

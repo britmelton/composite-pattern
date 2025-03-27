@@ -27,6 +27,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="local\selections-match.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="local\RuleSetConfig.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
