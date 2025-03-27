@@ -1,5 +1,4 @@
 ﻿using ReportManager.Infrastructure.Json;
-using MatchType = ReportManager.Infrastructure.Json.MatchType;
 
 namespace ReportManagerSpec;
 
@@ -7,37 +6,12 @@ public class ObjectProvider
 {
     public static RuleSet GetBasicRuleSet()
     {
-        var path = new TestFilePathProvider().GetPath("selections-match.json");
+        var path = new TestFilePathProvider().GetPath("basic.json");
         var questionConfigs = new QuestionConfigRepository().Find(path);
 
         return new RuleSetBuilder()
             .Load(questionConfigs)
             .Build()
             .GetRuleSet();
-    }
-
-    public static List<QuestionConfig> GetMatchRules()
-    {
-        var distribWeb = new QuestionWithValuesToMatch();
-        distribWeb.QuestionId = "DISTRIB";
-        distribWeb.Values = ["2"];
-
-        var responseIsNull = new QuestionWithValuesToMatch();
-        responseIsNull.QuestionId = "Q1";
-        responseIsNull.Values = ["null"];
-
-        var calculatedValues = new QuestionCalculatedValues();
-        calculatedValues.TargetValue = "99";
-        calculatedValues.Conditions = [responseIsNull, distribWeb];
-        calculatedValues.MatchType = MatchType.MatchAll;
-
-        var questionConfig = new QuestionConfig
-        {
-            QuestionId = "Q1",
-            Selections = ["1", "2", "98", "99"],
-            Rules = [calculatedValues]
-        };
-
-        return [questionConfig];
     }
 }
