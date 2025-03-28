@@ -2,12 +2,12 @@
 
 namespace ReportManager.Infrastructure.Json;
 
-public class RuleSetBuilder
+public class RuleSetRepository
 {
     private readonly List<QuestionConfig> _questionConfigs = [];
     private RuleSet? _ruleSet;
 
-    public RuleSetBuilder Build()
+    public RuleSetRepository Build()
     {
         _ruleSet = new RuleSet();
 
@@ -31,7 +31,7 @@ public class RuleSetBuilder
 
     public RuleSet GetRuleSet() => _ruleSet!;
 
-    public RuleSetBuilder Load(List<QuestionConfig> questionConfigs)
+    public RuleSetRepository Load(List<QuestionConfig> questionConfigs)
     {
         _questionConfigs.Clear();
         _questionConfigs.AddRange(questionConfigs);

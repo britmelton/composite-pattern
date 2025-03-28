@@ -2,27 +2,33 @@
 
 public class WhenBuildingAReport
 {
-    #region Setup
+    #region Implementation
 
-    private readonly RuleSet _ruleSet = ObjectProvider.GetAlternateRuleSet();
+    public static IEnumerable<object[]> GetRuleSets()
+    {
+        yield return [ObjectProvider.GetBasicRuleSet()];
+        yield return [ObjectProvider.GetAlternateRuleSet()];
+    }
 
     #endregion
 
     #region Requirements
 
-    [Fact]
-    public void WithAcceptableResponse_ThenReportResponseIsSurveyResponse()
+    [Theory]
+    [MemberData(nameof(GetRuleSets))]
+    public void WithAcceptableResponse_ThenReportResponseIsSurveyResponse(RuleSet ruleSet)
     {
         const string questionId = "Q1", response = "1";
         var survey = new Survey(new QuestionResponse(questionId, response));
 
-        var report = Report.Builder.Build(survey, _ruleSet);
+        var report = Report.Builder.Build(survey, ruleSet);
 
         report[questionId].Should().Be(response);
     }
 
-    [Fact]
-    public void WithApplicableMatchAll_ThenReportResponseIsTargetValue()
+    [Theory]
+    [MemberData(nameof(GetRuleSets))]
+    public void WithApplicableMatchAll_ThenReportResponseIsTargetValue(RuleSet ruleSet)
     {
         var survey = new Survey(
             new("DISTRIB", "2"),
@@ -30,7 +36,7 @@ public class WhenBuildingAReport
             new("Q2", "null")
         );
 
-        var report = Report.Builder.Build(survey, _ruleSet);
+        var report = Report.Builder.Build(survey, ruleSet);
 
         report["Q2"].Should().Be("99");
     }

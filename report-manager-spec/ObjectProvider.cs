@@ -1,7 +1,7 @@
-﻿using ReportManager.Infrastructure.Database;
-using ReportManager.Infrastructure.Json;
+﻿using ReportManager.Infrastructure.Json;
 using RuleSet = ReportManager.Domain.RuleSet;
 using DbRule = ReportManager.Infrastructure.Database.Rule;
+using RuleSetRepository = ReportManager.Infrastructure.Json.RuleSetRepository;
 
 namespace ReportManagerSpec;
 
@@ -19,7 +19,7 @@ public class ObjectProvider
             new("Q2", surveyId, "DISTRIB", 2, true, false, "99", "2")
         };
 
-        return new RuleSetRepository(seed).Find(surveyId);
+        return new ReportManager.Infrastructure.Database.RuleSetRepository(seed).Find(surveyId);
     }
 
     public static RuleSet GetBasicRuleSet()
@@ -27,7 +27,7 @@ public class ObjectProvider
         var path = new TestFilePathProvider().GetPath("basic.json");
         var questionConfigs = new QuestionConfigRepository().Find(path);
 
-        return new RuleSetBuilder()
+        return new RuleSetRepository()
             .Load(questionConfigs)
             .Build()
             .GetRuleSet();
