@@ -21,7 +21,7 @@ public class WhenBuildingAReport
         const string questionId = "Q1", response = "1";
         var survey = new Survey(new QuestionResponse(questionId, response));
 
-        var report = Report.Builder.Build(survey, ruleSet);
+        var report = Report.From(survey, ruleSet);
 
         report[questionId].Should().Be(response);
     }
@@ -36,7 +36,7 @@ public class WhenBuildingAReport
             new("Q2", "null")
         );
 
-        var report = Report.Builder.Build(survey, ruleSet);
+        var report = Report.From(survey, ruleSet);
 
         report["Q2"].Should().Be("99");
     }
