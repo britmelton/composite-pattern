@@ -2,19 +2,14 @@
 
 namespace ReportManager.Infrastructure.Database;
 
-public class RuleSetRepository : IRuleSetRepository
+public class RuleSetRepository(IDbContext context) : IRuleSetRepository
 {
-    private readonly List<Rule> _rules;
-
-    public RuleSetRepository(IEnumerable<Rule> rules)
-    {
-        _rules = rules.ToList();
-    }
+    public Domain.RuleSet Find(string path) => throw new NotSupportedException();
 
     public Domain.RuleSet Find(Guid surveyId)
     {
         var ruleSet = new Domain.RuleSet();
-        var rules = _rules.Where(x => x.SurveyId == surveyId);
+        var rules = context.Rules.Where(x => x.SurveyId == surveyId);
 
         foreach (var group in rules.GroupBy(x => x.GroupNumber))
         {

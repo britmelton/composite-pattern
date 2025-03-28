@@ -1,13 +1,14 @@
 ﻿using ReportManager.Infrastructure.Json;
 using RuleSet = ReportManager.Domain.RuleSet;
 using DbRule = ReportManager.Infrastructure.Database.Rule;
-using RuleSetRepository = ReportManager.Infrastructure.Json.RuleSetRepository;
+using DbRuleSetRepository = ReportManager.Infrastructure.Database.RuleSetRepository;
+using JsonRuleSetRepository = ReportManager.Infrastructure.Json.RuleSetRepository;
 
 namespace ReportManagerSpec;
 
 public class ObjectProvider
 {
-    public static RuleSet GetAlternateRuleSet()
+    public static RuleSet GetDbRuleSet()
     {
         var surveyId = Guid.NewGuid();
 
@@ -19,17 +20,15 @@ public class ObjectProvider
             new("Q2", surveyId, "DISTRIB", 2, true, false, "99", "2")
         };
 
-        return new ReportManager.Infrastructure.Database.RuleSetRepository(seed).Find(surveyId);
+        var context = new DbContext(seed);
+
+        return new DbRuleSetRepository(context).Find(surveyId);
     }
 
-    public static RuleSet GetBasicRuleSet()
+    public static RuleSet GetJsonRuleSet()
     {
-        var path = new TestFilePathProvider().GetPath("basic.json");
-        var questionConfigs = new QuestionConfigRepository().Find(path);
+        var path = new TestFilePathProvider().GetPath("test.json");
 
-        return new RuleSetRepository()
-            .Load(questionConfigs)
-            .Build()
-            .GetRuleSet();
+        return new JsonRuleSetRepository(new QuestionConfigRepository()).Find(path);
     }
 }

@@ -6,8 +6,8 @@ public class WhenBuildingAReport
 
     public static IEnumerable<object[]> GetRuleSets()
     {
-        yield return [ObjectProvider.GetBasicRuleSet()];
-        yield return [ObjectProvider.GetAlternateRuleSet()];
+        yield return [ObjectProvider.GetJsonRuleSet()];
+        yield return [ObjectProvider.GetDbRuleSet()];
     }
 
     #endregion

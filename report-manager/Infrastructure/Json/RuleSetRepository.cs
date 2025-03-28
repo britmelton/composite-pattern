@@ -2,39 +2,17 @@
 
 namespace ReportManager.Infrastructure.Json;
 
-public class RuleSetRepository
+public class RuleSetRepository(IQuestionConfigRepository qcRepo) : IRuleSetRepository
 {
-    private readonly List<QuestionConfig> _questionConfigs = [];
-    private RuleSet? _ruleSet;
-
-    public RuleSetRepository Build()
+    public RuleSet Find(string path)
     {
-        _ruleSet = new RuleSet();
+        var questionConfigs = qcRepo.Find(path);
 
-        foreach (var q in _questionConfigs)
-        {
-            _ruleSet.Add(q.QuestionId, new MatchRule(q.QuestionId, q.Selections));
-
-            foreach (var r in q.Rules)
-            {
-                var allRule = new AllRule(
-                    r.TargetValue,
-                    r.Conditions.Select(x => new MatchRule(x.QuestionId, x.Values))
-                );
-
-                _ruleSet.Add(q.QuestionId, allRule);
-            }
-        }
-
-        return this;
+        return new RuleSetBuilder()
+            .Load(questionConfigs)
+            .Build()
+            .GetRuleSet();
     }
 
-    public RuleSet GetRuleSet() => _ruleSet!;
-
-    public RuleSetRepository Load(List<QuestionConfig> questionConfigs)
-    {
-        _questionConfigs.Clear();
-        _questionConfigs.AddRange(questionConfigs);
-        return this;
-    }
+    public RuleSet Find(Guid surveyId) => throw new NotSupportedException();
 }
