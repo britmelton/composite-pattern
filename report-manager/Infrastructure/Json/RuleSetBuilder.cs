@@ -38,3 +38,9 @@ public class RuleSetBuilder
         return this;
     }
 }
+
+public static class Extensions
+{
+    public static IRuleSetSourceIterator GetIterator(this IEnumerable<QuestionConfig> source) =>
+        new RuleSetSourceIterator(source);
+}

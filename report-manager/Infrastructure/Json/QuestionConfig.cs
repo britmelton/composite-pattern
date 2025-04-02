@@ -4,7 +4,7 @@ using Newtonsoft.Json.Converters;
 namespace ReportManager.Infrastructure.Json;
 
 /// <remarks>A storage implementation detail.</remarks>
-public class QuestionConfig
+public partial class QuestionConfig
 {
     public string QuestionId { get; set; }
     public bool IsDeleted { get; set; }
@@ -20,7 +20,7 @@ public class QuestionCalculatedValues
     [JsonConverter(typeof(StringEnumConverter))]
     public MatchType MatchType { get; set; }
 
-    public string TargetValue { get; set; }
+    public string TargetValue { get; set; } // replacement
 }
 
 public class QuestionWithValuesToMatch
