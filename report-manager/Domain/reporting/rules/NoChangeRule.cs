@@ -1,4 +1,4 @@
-﻿namespace ReportManager.Domain;
+﻿namespace ReportManager.Domain.Reporting;
 
 /// <remarks>
 ///     The original leaf <see cref="Rule" /> for determining if a <see cref="QuestionResponse" /> matched any

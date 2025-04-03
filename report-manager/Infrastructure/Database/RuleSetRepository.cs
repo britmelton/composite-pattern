@@ -1,21 +1,21 @@
-﻿using ReportManager.Domain;
+﻿using ReportManager.Domain.Reporting;
 
 namespace ReportManager.Infrastructure.Database;
 
 public class RuleSetRepository(IDbContext context) : IRuleSetRepository
 {
-    public Domain.RuleSet Find(string path) => throw new NotSupportedException();
+    public Domain.Reporting.RuleSet Find(string path) => throw new NotSupportedException();
 
-    public Domain.RuleSet Find(Guid surveyId)
+    public Domain.Reporting.RuleSet Find(Guid surveyId)
     {
-        var ruleSet = new Domain.RuleSet();
+        var ruleSet = new Domain.Reporting.RuleSet();
         var rules = context.Rules.Where(x => x.SurveyId == surveyId);
 
         foreach (var group in rules.GroupBy(x => x.GroupNumber))
         {
             var first = group.First();
 
-            Domain.Rule rule = group.Count() == 1
+            Domain.Reporting.Rule rule = group.Count() == 1
                 ? new MatchRule(
                     first.TargetQuestionId,
                     first.TargetValues.Split(",")

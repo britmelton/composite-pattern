@@ -1,7 +1,7 @@
 ﻿using FluentAssertions.Execution;
 using ReportManager.Infrastructure.Json;
 
-namespace ReportManagerSpec;
+namespace ReportManagerSpec.Infrastructure;
 
 public class RuleSetConfigSpec
 {

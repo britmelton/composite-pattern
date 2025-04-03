@@ -27,10 +27,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="local\test.json">
+    <None Update="_data\test.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="local\RuleSetConfig.json">
+    <None Update="_data\RuleSetConfig.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

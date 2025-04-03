@@ -1,4 +1,4 @@
-﻿using ReportManager.Domain;
+﻿using ReportManager.Domain.Reporting;
 
 namespace ReportManager.Infrastructure.Json;
 

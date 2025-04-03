@@ -1,4 +1,6 @@
-﻿namespace ReportManagerSpec;
+﻿using ReportManager.Domain.Reporting;
+
+namespace ReportManagerSpec.Reporting;
 
 public class WhenBuildingAReport
 {

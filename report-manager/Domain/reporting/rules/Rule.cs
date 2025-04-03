@@ -1,4 +1,4 @@
-﻿namespace ReportManager.Domain;
+﻿namespace ReportManager.Domain.Reporting;
 
 /// <summary>
 ///     Represents a set of logic applied to <see cref="Survey" /> responses when building a <see cref="Report" />.

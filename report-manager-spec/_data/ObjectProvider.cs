@@ -1,5 +1,5 @@
 ﻿using ReportManager.Infrastructure.Json;
-using RuleSet = ReportManager.Domain.RuleSet;
+using RuleSet = ReportManager.Domain.Reporting.RuleSet;
 using DbRule = ReportManager.Infrastructure.Database.Rule;
 using DbRuleSetRepository = ReportManager.Infrastructure.Database.RuleSetRepository;
 using JsonRuleSetRepository = ReportManager.Infrastructure.Json.RuleSetRepository;
