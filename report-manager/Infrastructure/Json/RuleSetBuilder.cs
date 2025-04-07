@@ -2,6 +2,7 @@
 
 namespace ReportManager.Infrastructure.Json;
 
+[Obsolete]
 public class RuleSetBuilder
 {
     private readonly List<QuestionConfig> _questionConfigs = [];

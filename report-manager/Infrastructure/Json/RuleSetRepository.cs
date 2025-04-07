@@ -1,4 +1,5 @@
 ﻿using ReportManager.Domain.Reporting;
+using IRuleSetRepository = ReportManager.Domain.Reporting.IRuleSetRepository;
 
 namespace ReportManager.Infrastructure.Json;
 
