@@ -19,26 +19,25 @@ public partial class Summary
     {
         private readonly Summary _summary = new();
         private Rule? _current;
-        private Rule? _last;
 
         public Summary GetSummary() => _summary;
 
         public IRuleSetBuilder Add(MatchRuleArgs args)
         {
             var matchRule = (MatchRule) args;
-            _current.Add(_last = matchRule);
+            _current = _current.Add(matchRule);
             return this;
         }
 
         public IRuleSetBuilder NextQuestion(string questionId)
         {
-            _current = _last = _summary.Add(questionId);
+            _current = _summary.Add(questionId);
             return this;
         }
 
-        public IRuleSetBuilder SelectLast()
+        public IRuleSetBuilder SelectPrevious()
         {
-            _current = _last;
+            _current = _current.Parent;
             return this;
         }
     }

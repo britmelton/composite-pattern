@@ -10,7 +10,7 @@ public class WhenBuildingASummary
     [Fact]
     public void Then()
     {
-        var repo = new RuleSetRepository2(new QuestionConfigRepository());
+        var repo = new FlexibleRuleSetRepository(new QuestionConfigRepository());
         var builder = new Summary.Builder();
 
         repo.With(builder)

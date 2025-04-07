@@ -40,7 +40,7 @@ public abstract class CompositeRule : Rule
     {
         rule.SetParent(this);
         Children.Add(rule);
-        return this;
+        return rule;
     }
 
     public override Rule Prune(Rule rule)
@@ -86,9 +86,13 @@ public class MatchRule(
     IEnumerable<string> targetValues
 ) : Rule
 {
-    public override Rule Add(Rule rule) =>
+    public override Rule Add(Rule rule)
+    {
         Parent.Prune(this)
             .Add(new AllRule(this, rule));
+
+        return rule;
+    }
 
     public override string GetString(int currentLevel)
     {

@@ -1,14 +1,18 @@
-﻿namespace ReportManager.Domain;
+﻿using ReportManager.Domain.Summaries;
+
+namespace ReportManager.Domain;
 
 public interface IRuleSetBuilder
 {
-    IRuleSetBuilder Add(MatchRuleArgs matchRule);
-    IRuleSetBuilder NextQuestion(string questionId);
-
     /// <summary>
-    ///     Selects the most recent rule.
+    ///     Adds a <see cref="MatchRule" /> and selects it.
     /// </summary>
-    IRuleSetBuilder SelectLast();
+    /// <param name="matchRule"></param>
+    /// <returns></returns>
+    IRuleSetBuilder Add(MatchRuleArgs matchRule);
+
+    IRuleSetBuilder NextQuestion(string questionId);
+    IRuleSetBuilder SelectPrevious();
 }
 
 public record MatchRuleArgs(
@@ -17,10 +21,3 @@ public record MatchRuleArgs(
     IEnumerable<string>? TargetValues,
     string? ReplacementValue = null
 );
-
-public interface IRuleSetRepository2
-{
-    IRuleSetRepository2 Find();
-    IRuleSetRepository2 Find(string path);
-    IRuleSetRepository2 With(IRuleSetBuilder builder);
-}
