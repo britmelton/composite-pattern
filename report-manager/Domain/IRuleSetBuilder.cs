@@ -2,6 +2,9 @@
 
 namespace ReportManager.Domain;
 
+/// <summary>
+///     Provides and interface for building some kind of rule set by populating depth-first.
+/// </summary>
 public interface IRuleSetBuilder
 {
     /// <summary>

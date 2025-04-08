@@ -5,19 +5,24 @@ namespace ReportManagerSpec.Summaries;
 
 public class WhenBuildingASummary
 {
+    #region Setup
+
+    private readonly Summary.Builder _builder = new();
+
+    #endregion
+
     #region Requirements
 
     [Fact]
     public void Then()
     {
         var repo = new FlexibleRuleSetRepository(new QuestionConfigRepository());
-        var builder = new Summary.Builder();
 
-        repo.With(builder)
+        repo.With(_builder)
             .Find(new TestFilePathProvider().GetPath("test.json"));
 
-        var ruleSet = builder.GetSummary();
-        var text = ruleSet.ToString();
+        var summary = _builder.GetSummary();
+        var text = summary.ToString();
 
         var expected = """
                        Q1:
