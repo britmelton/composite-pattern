@@ -1,4 +1,4 @@
-﻿using ReportManager.Domain.Reporting;
+﻿using ReportManager.Domain.Legacy.Reporting;
 
 namespace ReportManagerSpec.Reporting;
 

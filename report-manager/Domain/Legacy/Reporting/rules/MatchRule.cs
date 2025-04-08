@@ -1,4 +1,4 @@
-﻿namespace ReportManager.Domain.Reporting;
+﻿namespace ReportManager.Domain.Legacy.Reporting;
 
 /// <summary>
 ///     A leaf <see cref="Rule" /> used to determine if a <see cref="QuestionResponse" /> matches a set of acceptable

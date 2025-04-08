@@ -1,4 +1,4 @@
-﻿namespace ReportManager.Domain.Reporting;
+﻿namespace ReportManager.Domain.Legacy.Reporting;
 
 /// <summary>
 ///     A composite <see cref="Rule" /> that overrides a <see cref="QuestionResponse" /> if all its children are satisfied.

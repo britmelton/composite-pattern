@@ -1,4 +1,4 @@
-﻿namespace ReportManager.Domain.Reporting;
+﻿namespace ReportManager.Domain.Legacy.Reporting;
 
 public interface IRuleSetRepository
 {

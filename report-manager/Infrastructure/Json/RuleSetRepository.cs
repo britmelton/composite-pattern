@@ -1,9 +1,9 @@
-﻿using ReportManager.Domain.Reporting;
-using IRuleSetRepository = ReportManager.Domain.Reporting.IRuleSetRepository;
+﻿using ReportManager.Domain.Legacy.Reporting;
+using Reporting_IRuleSetRepository = ReportManager.Domain.Legacy.Reporting.IRuleSetRepository;
 
 namespace ReportManager.Infrastructure.Json;
 
-public class RuleSetRepository(IQuestionConfigRepository qcRepo) : IRuleSetRepository
+public class RuleSetRepository(IQuestionConfigRepository qcRepo) : Reporting_IRuleSetRepository
 {
     public RuleSet Find(string path)
     {

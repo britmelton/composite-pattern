@@ -1,4 +1,4 @@
-﻿namespace ReportManager.Domain.Reporting;
+﻿namespace ReportManager.Domain.Legacy.Reporting;
 
 /// <summary>
 ///     Always the base <see cref="Rule" /> for a given question.
