@@ -15,14 +15,13 @@ public class FlexibleRuleSetRepository(IQuestionConfigRepository qcRepo) : IFlex
         foreach (var q in questionConfigs)
         {
             _builder
-                .NextQuestion(q.QuestionId) // insert root
-                .Add(new(q.QuestionId, q.QuestionId, q.Selections)) // add match & select it
-                .SelectPrevious(); // return to root
+                .NextQuestion(q.QuestionId)
+                .Add(new(q.QuestionId, q.QuestionId, q.Selections))
+                .SelectPrevious();
 
             foreach (var r in q.Rules)
             foreach (var c in r.Conditions)
-                _builder
-                    .Add(new(q.QuestionId, c.QuestionId, c.Values)); // add match & select it
+                _builder.Add(new(q.QuestionId, c.QuestionId, c.Values));
         }
 
         return this;

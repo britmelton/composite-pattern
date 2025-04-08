@@ -1,36 +1,42 @@
-﻿using ReportManager.Domain.Legacy.Reporting;
+﻿using ReportManager.Domain.Reporting;
+using ReportManager.Infrastructure.Json;
 
 namespace ReportManagerSpec.Reporting;
 
 public class WhenBuildingAReport
 {
-    #region Implementation
+    #region Setup
 
-    public static IEnumerable<object[]> GetRuleSets()
+    private readonly RuleSet.Builder _builder = new();
+    private readonly RuleSet _ruleSet;
+
+    public WhenBuildingAReport()
     {
-        yield return [ObjectProvider.GetJsonRuleSet()];
-        yield return [ObjectProvider.GetDbRuleSet()];
+        var repo = new FlexibleRuleSetRepository(new QuestionConfigRepository());
+
+        repo.With(_builder)
+            .Find(new TestFilePathProvider().GetPath("test.json"));
+
+        _ruleSet = _builder.GetRuleSet();
     }
 
     #endregion
 
     #region Requirements
 
-    [Theory]
-    [MemberData(nameof(GetRuleSets))]
-    public void WithAcceptableResponse_ThenReportResponseIsSurveyResponse(RuleSet ruleSet)
+    [Fact]
+    public void WithAcceptableResponse_ThenReportResponseIsSurveyResponse()
     {
         const string questionId = "Q1", response = "1";
         var survey = new Survey(new QuestionResponse(questionId, response));
 
-        var report = Report.From(survey, ruleSet);
+        var report = Report.From(survey, _ruleSet);
 
         report[questionId].Should().Be(response);
     }
 
-    [Theory]
-    [MemberData(nameof(GetRuleSets))]
-    public void WithApplicableMatchAll_ThenReportResponseIsTargetValue(RuleSet ruleSet)
+    [Fact]
+    public void WithApplicableMatchAll_ThenReportResponseIsTargetValue()
     {
         var survey = new Survey(
             new("DISTRIB", "2"),
@@ -38,7 +44,7 @@ public class WhenBuildingAReport
             new("Q2", "null")
         );
 
-        var report = Report.From(survey, ruleSet);
+        var report = Report.From(survey, _ruleSet);
 
         report["Q2"].Should().Be("99");
     }
