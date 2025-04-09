@@ -5,7 +5,7 @@ namespace ReportManager.Domain.Summaries;
 /// <summary>
 ///     A rule set primarily for humans to read.
 /// </summary>
-public partial class Summary
+public partial class RuleSetSummary
 {
     private string? _text;
 

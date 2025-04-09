@@ -9,7 +9,7 @@ public partial class RuleSet
     public class Builder : IRuleSetBuilder
     {
         private readonly RuleSet _ruleSet = new();
-        private INode<Rule> _current;
+        private Rule _current;
 
         public RuleSet GetRuleSet() => _ruleSet;
 

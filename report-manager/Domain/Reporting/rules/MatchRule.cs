@@ -11,7 +11,7 @@ public class MatchRule : Rule
     public string TargetQuestion { get; }
     public IEnumerable<string> TargetValues { get; }
 
-    public override INode<Rule> Add(MatchRuleArgs args) =>
+    public override Rule Add(MatchRuleArgs args) =>
         Parent
             .Prune(this)
             .Add(

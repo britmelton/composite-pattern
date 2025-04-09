@@ -3,11 +3,11 @@ using ReportManager.Infrastructure.Json;
 
 namespace ReportManagerSpec.Summaries;
 
-public class WhenBuildingASummary
+public class WhenBuildingARuleSetSummary
 {
     #region Setup
 
-    private readonly Summary.Builder _builder = new();
+    private readonly RuleSetSummary.Builder _builder = new();
 
     #endregion
 

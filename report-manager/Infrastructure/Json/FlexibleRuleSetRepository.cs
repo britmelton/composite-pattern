@@ -21,7 +21,7 @@ public class FlexibleRuleSetRepository(IQuestionConfigRepository qcRepo) : IFlex
 
             foreach (var r in q.Rules)
             foreach (var c in r.Conditions)
-                _builder.Add(new(q.QuestionId, c.QuestionId, c.Values));
+                _builder.Add(new(q.QuestionId, c.QuestionId, c.Values, r.TargetValue));
         }
 
         return this;

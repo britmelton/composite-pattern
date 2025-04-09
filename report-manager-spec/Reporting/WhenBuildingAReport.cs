@@ -13,9 +13,9 @@ public class WhenBuildingAReport
     public WhenBuildingAReport()
     {
         var repo = new FlexibleRuleSetRepository(new QuestionConfigRepository());
+        var path = new TestFilePathProvider().GetPath("test.json");
 
-        repo.With(_builder)
-            .Find(new TestFilePathProvider().GetPath("test.json"));
+        repo.With(_builder).Find(path);
 
         _ruleSet = _builder.GetRuleSet();
     }

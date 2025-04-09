@@ -1,10 +1,10 @@
 ﻿namespace ReportManager.Domain.Summaries;
 
-public partial class Summary
+public partial class RuleSetSummary
 {
     private readonly Dictionary<string, Rule> _rules = [];
 
-    private Summary()
+    private RuleSetSummary()
     {
     }
 
@@ -17,10 +17,10 @@ public partial class Summary
 
     public class Builder : IRuleSetBuilder
     {
-        private readonly Summary _summary = new();
+        private readonly RuleSetSummary _ruleSetSummary = new();
         private Rule? _current;
 
-        public Summary GetSummary() => _summary;
+        public RuleSetSummary GetSummary() => _ruleSetSummary;
 
         public IRuleSetBuilder Add(MatchRuleArgs args)
         {
@@ -31,7 +31,7 @@ public partial class Summary
 
         public IRuleSetBuilder NextQuestion(string questionId)
         {
-            _current = _summary.Add(questionId);
+            _current = _ruleSetSummary.Add(questionId);
             return this;
         }
 

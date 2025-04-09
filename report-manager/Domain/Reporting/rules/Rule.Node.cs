@@ -1,14 +1,40 @@
 ﻿namespace ReportManager.Domain.Reporting;
 
-public partial class Rule : INode<Rule>
+public partial class Rule
 {
-    protected readonly Node<Rule> Node = new();
+    private readonly List<Rule> _children = [];
 
-    public INode<Rule>? Parent => Node.Parent;
+    public Rule? Parent { get; private set; }
 
-    public virtual INode<Rule> Add(INode<Rule> node) => Node.Add(node);
-    public virtual INode<Rule> Add(MatchRuleArgs args) => Add((MatchRule) args);
-    public INode<Rule> Orphan() => Node.Orphan();
-    public INode<Rule> Prune(INode<Rule> node) => Node.Prune(node);
-    public INode<Rule> SetParent(INode<Rule> node) => Node.SetParent(node);
+    public virtual Rule Add(Rule rule)
+    {
+        rule.SetParent(this);
+        _children.Add(rule);
+        return rule;
+    }
+
+    public virtual Rule Add(MatchRuleArgs args) => Add((MatchRule) args);
+
+    public Rule Orphan()
+    {
+        Parent = null;
+        return this;
+    }
+
+    public Rule Prune(Rule node)
+    {
+        if (!_children.Contains(node))
+            return this;
+
+
+        _children.Remove(node);
+        node.Orphan();
+        return this;
+    }
+
+    public Rule SetParent(Rule rule)
+    {
+        Parent = rule;
+        return this;
+    }
 }

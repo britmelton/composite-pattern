@@ -4,7 +4,7 @@ public partial class RuleSet
 {
     private readonly Dictionary<string, Rule> _rules = [];
 
-    public Rule Add(string questionId)
+    public RootRule Add(string questionId)
     {
         var root = new RootRule();
         _rules.Add(questionId, root);
