@@ -6,7 +6,7 @@
 /// </summary>
 public interface IAdvancedRuleSetRepository
 {
-    IAdvancedRuleSetRepository Find();
+    IAdvancedRuleSetRepository Find(Guid surveyId);
     IAdvancedRuleSetRepository Find(string path);
     IAdvancedRuleSetRepository With(IDepthFirstRuleSetBuilder builder);
 }

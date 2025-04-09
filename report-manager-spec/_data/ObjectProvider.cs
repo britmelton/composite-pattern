@@ -1,4 +1,5 @@
-﻿using ReportManager.Infrastructure.Json;
+﻿using ReportManager.Infrastructure.Database;
+using ReportManager.Infrastructure.Json;
 using RuleSet = ReportManager.Domain.Legacy.Reporting.RuleSet;
 using DbRule = ReportManager.Infrastructure.Database.Rule;
 using DbRuleSetRepository = ReportManager.Infrastructure.Database.RuleSetRepository;
@@ -8,7 +9,7 @@ namespace ReportManagerSpec;
 
 public class ObjectProvider
 {
-    public static RuleSet GetDbRuleSet()
+    public static IDbContext GetDbContext()
     {
         var surveyId = Guid.NewGuid();
 
@@ -20,7 +21,13 @@ public class ObjectProvider
             new("Q2", surveyId, "DISTRIB", 2, true, false, "99", "2")
         };
 
-        var context = new DbContext(seed);
+        return new DbContext(seed);
+    }
+
+    public static RuleSet GetDbRuleSet()
+    {
+        var context = GetDbContext();
+        var surveyId = context.Rules.First().SurveyId;
 
         return new DbRuleSetRepository(context).Find(surveyId);
     }

@@ -6,7 +6,7 @@ public class AdvancedRuleSetRepository(IQuestionConfigRepository qcRepo) : IAdva
 {
     private IDepthFirstRuleSetBuilder _builder;
 
-    public IAdvancedRuleSetRepository Find() => throw new NotSupportedException();
+    public IAdvancedRuleSetRepository Find(Guid surveyId) => throw new NotSupportedException();
 
     public IAdvancedRuleSetRepository Find(string path)
     {
