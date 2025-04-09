@@ -13,7 +13,7 @@ public partial class Rule
         return rule;
     }
 
-    public virtual Rule Add(MatchRuleArgs args) => Add((MatchRule) args);
+    public virtual Rule Add(IDepthFirstRuleSetBuilder.MatchRuleArgs args) => Add((MatchRule) args);
 
     public Rule Orphan()
     {

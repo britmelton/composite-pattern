@@ -12,7 +12,7 @@ public class WhenBuildingAReport
 
     public WhenBuildingAReport()
     {
-        var repo = new FlexibleRuleSetRepository(new QuestionConfigRepository());
+        var repo = new AdvancedRuleSetRepository(new QuestionConfigRepository());
         var path = new TestFilePathProvider().GetPath("test.json");
 
         repo.With(_builder).Find(path);

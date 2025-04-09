@@ -27,7 +27,7 @@ public class MatchRule(
         return sb.ToString();
     }
 
-    public static implicit operator MatchRule(MatchRuleArgs source) =>
+    public static implicit operator MatchRule(IDepthFirstRuleSetBuilder.MatchRuleArgs source) =>
         new(
             source.TargetQuestionId,
             source.TargetValues

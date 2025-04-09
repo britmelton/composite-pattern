@@ -15,27 +15,27 @@ public partial class RuleSetSummary
         return root;
     }
 
-    public class Builder : IRuleSetBuilder
+    public class Builder : IDepthFirstRuleSetBuilder
     {
         private readonly RuleSetSummary _ruleSetSummary = new();
         private Rule? _current;
 
         public RuleSetSummary GetSummary() => _ruleSetSummary;
 
-        public IRuleSetBuilder Add(MatchRuleArgs args)
+        public IDepthFirstRuleSetBuilder Add(IDepthFirstRuleSetBuilder.MatchRuleArgs args)
         {
             var matchRule = (MatchRule) args;
             _current = _current.Add(matchRule);
             return this;
         }
 
-        public IRuleSetBuilder NextQuestion(string questionId)
+        public IDepthFirstRuleSetBuilder NextQuestion(string questionId)
         {
             _current = _ruleSetSummary.Add(questionId);
             return this;
         }
 
-        public IRuleSetBuilder SelectPrevious()
+        public IDepthFirstRuleSetBuilder SelectPrevious()
         {
             _current = _current.Parent;
             return this;

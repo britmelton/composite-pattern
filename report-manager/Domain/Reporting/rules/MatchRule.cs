@@ -11,7 +11,7 @@ public class MatchRule : Rule
     public string TargetQuestion { get; }
     public IEnumerable<string> TargetValues { get; }
 
-    public override Rule Add(MatchRuleArgs args) =>
+    public override Rule Add(IDepthFirstRuleSetBuilder.MatchRuleArgs args) =>
         Parent
             .Prune(this)
             .Add(
@@ -31,7 +31,7 @@ public class MatchRule : Rule
         return TargetValues.Contains(survey[TargetQuestion].Response);
     }
 
-    public static implicit operator MatchRule(MatchRuleArgs source) =>
+    public static implicit operator MatchRule(IDepthFirstRuleSetBuilder.MatchRuleArgs source) =>
         new(
             source.TargetQuestionId,
             source.TargetValues

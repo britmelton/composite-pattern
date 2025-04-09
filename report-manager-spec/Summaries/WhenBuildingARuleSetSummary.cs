@@ -16,7 +16,7 @@ public class WhenBuildingARuleSetSummary
     [Fact]
     public void Then()
     {
-        var repo = new FlexibleRuleSetRepository(new QuestionConfigRepository());
+        var repo = new AdvancedRuleSetRepository(new QuestionConfigRepository());
 
         repo.With(_builder)
             .Find(new TestFilePathProvider().GetPath("test.json"));

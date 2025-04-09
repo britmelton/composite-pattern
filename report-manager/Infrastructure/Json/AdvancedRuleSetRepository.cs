@@ -2,13 +2,13 @@
 
 namespace ReportManager.Infrastructure.Json;
 
-public class FlexibleRuleSetRepository(IQuestionConfigRepository qcRepo) : IFlexibleRuleSetRepository
+public class AdvancedRuleSetRepository(IQuestionConfigRepository qcRepo) : IAdvancedRuleSetRepository
 {
-    private IRuleSetBuilder _builder;
+    private IDepthFirstRuleSetBuilder _builder;
 
-    public IFlexibleRuleSetRepository Find() => throw new NotSupportedException();
+    public IAdvancedRuleSetRepository Find() => throw new NotSupportedException();
 
-    public IFlexibleRuleSetRepository Find(string path)
+    public IAdvancedRuleSetRepository Find(string path)
     {
         var questionConfigs = qcRepo.Find(path);
 
@@ -27,7 +27,7 @@ public class FlexibleRuleSetRepository(IQuestionConfigRepository qcRepo) : IFlex
         return this;
     }
 
-    public IFlexibleRuleSetRepository With(IRuleSetBuilder builder)
+    public IAdvancedRuleSetRepository With(IDepthFirstRuleSetBuilder builder)
     {
         _builder = builder;
         return this;
